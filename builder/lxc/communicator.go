@@ -107,7 +107,7 @@ func (c *LxcAttachCommunicator) Download(src string, w io.Writer) error {
 func (c *LxcAttachCommunicator) Execute(commandString string) (*exec.Cmd, error) {
 	log.Printf("Executing with lxc-attach in container: %s %s %s", c.ContainerName, c.RootFs, commandString)
 	command, err := c.CmdWrapper(
-		fmt.Sprintf("sudo lxc-attach --name %s -- /bin/sh -c \"%s\"", c.ContainerName, commandString))
+		fmt.Sprintf("sudo lxc-attach --name %s -- /bin/sh -c \"export PATH=$PATH:/bin:/sbin; %s\"", c.ContainerName, commandString))
 	if err != nil {
 		return nil, err
 	}
